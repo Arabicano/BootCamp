@@ -12,5 +12,6 @@ ex) step01/gimun step01/sujin
 
 ## STEP 01 과제
 - 본인의 브랜치를 Fork 하고, TASK 별 Commit 을 남긴뒤에 PR 을 보내주세요.
+  - 커밋 메세지에 대한 고민과 PR 에 대한 과제 
 - 커밋 메세지에 대한 내용은 아래 글을 참고해주세요.
 - [좋은 커밋 메세지 란 ?](https://meetup.toast.com/posts/106)
