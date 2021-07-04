@@ -1,14 +1,13 @@
-package lotto.service;
+package com.bootcamp.lotto.service;
 
 import java.util.HashSet;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
-import lotto.model.Lotto;
+import com.bootcamp.lotto.model.Lotto;
 
 public class LottoService {
 
@@ -37,6 +36,7 @@ public class LottoService {
         int autoLotto = lottoCount - nonAutoLotto;
         // 4_0. 자동 갯수가 0인 경우 이 과정을 생략한다.
         if (autoLotto != 0) {
+            System.out.println("< 자동로또 : " + autoLotto+ "장 구매 >");
             for (int j = 1; j <= autoLotto; j++) {
                 Lotto lotto = getAutoLotto(j);
                 lottos.add(lotto);
@@ -54,66 +54,46 @@ public class LottoService {
         // Lotto winnerLotto = getAutoWinnerLotto();
         System.out.println("< 당첨 로또 번호 > 를 입력해주십시오.");
         Lotto winnerLotto = getNonAutoWinnerLotto();
+        System.out.println();
         System.out.println("당첨 " + winnerLotto.toString());
         System.out.println("---------------------------");
 
         // 2. 당첨결과 확인
         System.out.println("로또 당첨 결과 입니다.");
         int first, second, third, fourth, fifth, bomb;
+        long prize = 0L;
         first = second = third = fourth = fifth = bomb = 0;
         for (Lotto lotto : lottos) {
             String result = getResult(winnerLotto, lotto);
             switch(result) {
-                case "1등" : first++; break;
+                case "1등" : first++; 
+                    prize += 1500000000;    // 15억
+                break;
                 case "2등" : 
-                    second++; break;
+                    second++; 
+                    prize += 50000000;      // 5천만원
+                    break;
                 case "3등" : 
-                    third++; break;
+                    third++;
+                    prize += 1500000;       // 150만원
+                    break;
                 case "4등" : 
-                    fourth++; break;
+                    fourth++;
+                    prize += 50000;         // 5만원
+                    break;
                 case "5등" : 
+                    prize += 5000;          // 5천원
                     fifth++; break;
                 default : bomb++;
             }
             System.out.println(lotto.toString() + " -> 결과 : " + result);
         }
 
-        System.out.printf("최종결과: 1등 %d개, 2등 %d개, 3등 %d개, 4등 %d개, 5등 %d개, 꽝 %d개", first, second, third, fourth, fifth, bomb);
-        
-    }
+        double profitRate = ((prize - (lottos.size()*1000))/(lottos.size()*1000)) * 100;
 
-    // 당첨결과 확인
-    private String getResult(Lotto winnerLotto, Lotto lotto) {
-        // | 등수 | 조건 |
-        // | --- | --- |
-        // | 1등 | 6개 일치 |
-        // | 2등 | 5개 / 보너스 번호 일치 |
-        // | 3등 | 5개 / 보너스 번호 불일치 |
-        // | 4등 | 4개 일치 |
-        // | 5등 | 3개 일치 |
-
-        int matchCount = 0;
-        for (Integer i : winnerLotto.getNumbers()) {
-            if (lotto.getNumbers().contains(i)) {
-                matchCount++;
-            }
-        }
-
-        switch (matchCount) {
-            case 6:
-                return "1등";
-            case 5:
-                if (lotto.getNumbers().contains(winnerLotto.getBonusNum())) {
-                    return "2등";
-                }
-                return "3등";
-            case 4:
-                return "4등";
-            case 3:
-                return "5등";
-            default:
-                return "꽝";
-        }
+        System.out.printf("최종결과: 1등 %d개, 2등 %d개, 3등 %d개, 4등 %d개, 5등 %d개", first, second, third, fourth, fifth, bomb);
+        System.out.println();
+        System.out.printf("수익금은 %d원으로 수익률은 %.0f%% 입니다.", prize, profitRate);
     }
 
     // 로또 구매 장수
@@ -143,7 +123,7 @@ public class LottoService {
                 } else {
                     if ((money % 1000) > 0) {
                         // 2_2. 입력한 금액에서 나머지 금액은 잔액처리
-                        int change = money % 10000;
+                        int change = money % 1000;
                         System.out.println("내신 금액에서 거스름돈 " + change + "은(는) 돌려드립니다.");
                     }
                     // 2_3. 로또 장수가 1보다 클 경우 로또 구매 자동수동 여부 확인
@@ -291,5 +271,39 @@ public class LottoService {
         } while (bonusNum == 0);
 
         return lotto;
+    }
+
+    // 당첨결과 확인
+    private String getResult(Lotto winnerLotto, Lotto lotto) {
+        // | 등수 | 조건 | 당청금 |
+        // | --- | --- | --- |
+        // | 1등 | 6개 일치 | 15억원 |
+        // | 2등 | 5개 / 보너스 번호 일치 | 5천만원 |
+        // | 3등 | 5개 / 보너스 번호 불일치 | 150만원 |
+        // | 4등 | 4개 일치 | 5만원 |
+        // | 5등 | 3개 일치 | 5천원 |
+
+        int matchCount = 0;
+        for (Integer i : winnerLotto.getNumbers()) {
+            if (lotto.getNumbers().contains(i)) {
+                matchCount++;
+            }
+        }
+
+        switch (matchCount) {
+            case 6:
+                return "1등";
+            case 5:
+                if (lotto.getNumbers().contains(winnerLotto.getBonusNum())) {
+                    return "2등";
+                }
+                return "3등";
+            case 4:
+                return "4등";
+            case 3:
+                return "5등";
+            default:
+                return "꽝";
+        }
     }
 }

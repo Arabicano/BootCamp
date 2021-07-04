@@ -1,4 +1,4 @@
-package lotto.model;
+package com.bootcamp.lotto.model;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -10,7 +10,7 @@ public class Lotto {
     public Lotto(Set<Integer> lottoSet) {
         this.numbers = (TreeSet<Integer>) lottoSet;
     }
-    
+
     public Lotto(Set<Integer> lottoSet, int bonusNum) {
         this.numbers = (TreeSet<Integer>) lottoSet;
         this.bonusNum = bonusNum;
@@ -20,21 +20,21 @@ public class Lotto {
         return this.numbers;
     }
 
-    public int getBonusNum () {
+    public int getBonusNum() {
         return this.bonusNum;
     }
 
-    public void setBonusNum (int bonusNum) {
+    public void setBonusNum(int bonusNum) {
         this.bonusNum = bonusNum;
     }
 
     public String toString() {
         String result = "LOTTO : [ ";
-        for(Integer e : this.numbers) {
+        for (Integer e : this.numbers) {
             result += (e + " ");
         }
-        if(bonusNum != 0) {
-            result += "("+ this.bonusNum + ") ";
+        if (bonusNum != 0) {
+            result += "(" + this.bonusNum + ") ";
         }
         result += "]";
         return result;
