@@ -24,6 +24,10 @@ public class Lotto {
         return this.bonusNum;
     }
 
+    public void setBonusNum (int bonusNum) {
+        this.bonusNum = bonusNum;
+    }
+
     public String toString() {
         String result = "LOTTO : [ ";
         for(Integer e : this.numbers) {

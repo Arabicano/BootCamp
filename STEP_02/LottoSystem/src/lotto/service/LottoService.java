@@ -27,7 +27,8 @@ public class LottoService {
 
         // 3. 수동 갯수에 따른 로또 번호 받기
         for (int i = 1; i <= nonAutoLotto; i++) {
-            Lotto lotto = setNonAutoLotto(i);
+            System.out.println("< 수동로또 : " + i + " 번째 >");
+            Lotto lotto = setNonAutoLotto();
             lottos.add(lotto);
             System.out.println();
         }
@@ -50,7 +51,9 @@ public class LottoService {
         System.out.println();
         System.out.println("---------------------------");
         // 1. 당첨번호 가져오기
-        Lotto winnerLotto = getLottoWinningNumber();
+        // Lotto winnerLotto = getAutoWinnerLotto();
+        System.out.println("< 당첨 로또 번호 > 를 입력해주십시오.");
+        Lotto winnerLotto = getNonAutoWinnerLotto();
         System.out.println("당첨 " + winnerLotto.toString());
         System.out.println("---------------------------");
 
@@ -126,7 +129,7 @@ public class LottoService {
             } catch (InputMismatchException e) {
                 // 2. 입력받은 금액에 따른 처리
                 // 2_0. 숫자 외의 다른 값인 경우, 다시 입력받기
-                System.out.println("getLottoCount: 잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.");
+                System.out.println("잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.");
                 sc.nextLine();
                 continue;
             } catch (Exception e) {
@@ -165,7 +168,7 @@ public class LottoService {
                 nonAutoCount = sc.nextInt();
             } catch (InputMismatchException e) {
                 // 3_0. 숫자(자연수) 외의 다른 값인 경우, 다시 입력 받기
-                System.out.println("getNon: 잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.");
+                System.out.println("잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.");
                 sc.nextLine();
                 continue;
             } catch (Exception e) {
@@ -184,12 +187,11 @@ public class LottoService {
     }
 
     // 수동 로또 구매
-    private Lotto setNonAutoLotto(int i) {
+    private Lotto setNonAutoLotto() {
 
         Set<Integer> lottoSet = new TreeSet<>();
 
         // Scanner sc = new Scanner(System.in);
-        System.out.println("< 수동로또 : " + i + " 번째 >");
 
         // 1. 로또 값 입력
         for (int j = 1; j <= 6; j++) {
@@ -222,13 +224,6 @@ public class LottoService {
                     flag = true;
                 }
 
-                String result = ">> 현재 입력한 LOTTO : [ ";
-                for (Integer elem : lottoSet) {
-                    result += (elem + " ");
-                }
-                result += "]";
-                System.out.println(result);
-
             } while (!flag);
         }
 
@@ -251,8 +246,8 @@ public class LottoService {
         return new Lotto(lottoSet);
     }
 
-    // 당첨 로또
-    private Lotto getLottoWinningNumber() {
+    // 자동 당첨 로또
+    private Lotto getAutoWinnerLotto() {
         // 7개의 숫자를 랜덤하게 뽑고 그 중 하나(랜덤)를 보너스 번호로 지정한다.
         Random random = new Random(); // 랜덤 객체
 
@@ -271,4 +266,30 @@ public class LottoService {
         return new Lotto(lottoSet, bonusNum);
     }
 
+    // 수동 당첨 로또
+    private Lotto getNonAutoWinnerLotto() {
+        Lotto lotto = setNonAutoLotto();
+        int bonusNum = 0;
+        do {
+            try {
+                System.out.println("보너스 번호를 입력해주세요.");
+                bonusNum = sc.nextInt();
+            } catch (InputMismatchException e) {
+                // 3_0. 숫자(자연수) 외의 다른 값인 경우, 다시 입력 받기
+                System.out.println("잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.");
+                sc.nextLine();
+                continue;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (bonusNum <= 0 || bonusNum > 45 || lotto.getNumbers().contains(bonusNum)) {
+                bonusNum = 0;
+            } else {
+                lotto.setBonusNum(bonusNum);
+            }
+        } while (bonusNum == 0);
+
+        return lotto;
+    }
 }
