@@ -104,6 +104,7 @@ public class LottoService {
         // 1. 로또 구매를 위해 금액 입력받기
         do {
             try {
+                System.out.println("로또는 한 장당 1000원으로 판매됩니다.");
                 System.out.println("로또 구매를 위한 금액을 입력해주세요(숫자만입력).");
                 money = sc.nextInt();
             } catch (InputMismatchException e) {
@@ -156,7 +157,8 @@ public class LottoService {
             }
             if (nonAutoCount < 0 || nonAutoCount > lottoCount) {
                 // 3_1. 입력한 값이 로또 구매 장수보다 크거나 잘못된 값일 경우 다시 입력받기
-                System.out.println();
+                System.out.println("잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.");
+                sc.nextLine();
                 nonAutoCount = -1;
             } else {
                 System.out.println(nonAutoCount + "장을 수동으로 구매합니다.");
