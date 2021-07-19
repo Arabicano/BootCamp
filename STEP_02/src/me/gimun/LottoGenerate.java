@@ -6,7 +6,7 @@ public class LottoGenerate {
     private List<Integer> lotto;
     private int bonusNum;
 
-    public LottoGenerate(List<Integer> lotto) {
+    public LottoGenerate() {
         this.lotto = new ArrayList<Integer>();
     }
 
@@ -28,6 +28,12 @@ public class LottoGenerate {
 
     }
 
+    public List<Integer> getLotto() {
+        return lotto;
+    }
 
+    public int getBonusNum() {
+        return bonusNum;
+    }
 
 }
