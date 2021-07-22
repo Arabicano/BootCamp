@@ -15,6 +15,10 @@ class LottoGenerateTest {
         lottoGenerate.generate();
         List<Integer> lotto = lottoGenerate.getLotto();
         int bonus = lottoGenerate.getBonusNum();
+
+        assertNotNull(lotto);
+        assertNotNull(bonus);
+
         System.out.println(lotto);
         System.out.println(bonus);
     }
