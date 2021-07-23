@@ -2,9 +2,7 @@ package me.gimun;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,19 +11,26 @@ class SettingWinningNumberTest {
     @Test
     void winningNumSet() {
         SettingWinningNumber settingWinningNumber = new SettingWinningNumber();
-        int[] nums = new int[6];
-        nums[0] = 3;
-        nums[1] = 10;
-        nums[2] = 13;
-        nums[3] = 21;
-        nums[4] = 26;
-        nums[5] = 31;
+        Set<Integer> set = new HashSet<>();
+        set.add(3);
+        set.add(10);
+        set.add(13);
+        set.add(21);
+        set.add(26);
+        set.add(31);
 
-        settingWinningNumber.winningNumSet(nums,40);
+        List<Integer> winningLotto = new ArrayList<Integer>();
+        winningLotto.addAll(set);
+        Collections.sort(winningLotto);
+
+        //보너스번호
+        winningLotto.add(45);
+
+        settingWinningNumber.winningNumSet(winningLotto);
 
         assertEquals(settingWinningNumber.getWinningLotto().get(0),3);
         assertEquals(settingWinningNumber.getWinningLotto().get(5),31);
-        assertEquals(settingWinningNumber.getWinningBonusNum(),40);
+        assertEquals(settingWinningNumber.getWinningBonusNum(),45);
 
 
         System.out.println("winningLotto : " + settingWinningNumber.getWinningLotto());

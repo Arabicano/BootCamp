@@ -14,12 +14,16 @@ public class SettingWinningNumber {
         this.winningLotto = new ArrayList<Integer>();
     }
 
-    public void winningNumSet(int[] nums, int bonus){
-        if(nums.length != 6){
+    public void winningNumSet(List<Integer> lotto){
+        //로또 길이가 7이 아니면 에러
+        if(lotto.size() != 7){
             throw new IllegalArgumentException();
         }
-        Arrays.stream(nums).forEach(n -> this.winningLotto.add(n));
-        this.winningBonusNum = bonus;
+
+        this.winningBonusNum = lotto.get(lotto.size()-1);
+        lotto.remove(lotto.size()-1);
+        this.winningLotto = lotto;
+
     }
 
     public List<Integer> getWinningLotto() {
