@@ -3,16 +3,6 @@ package me.gimun;
 import java.util.List;
 
 public class ConfirmWinning {
-    /*
-    * 당첨 여부 확인
-    * 당첨 종류
-    * 1등 : 6개일치
-    * 2등 : 5개 / 보너스 일치
-    * 3등 : 4개 일치
-    * 4등 : 3개 일치
-    * 나머지 낙첨
-    * */
-
     public String confirmLotto(List<Integer> winningLotto, int bonus, List<Integer> buyLotto){
         String result = "";
         int winNumbers = 0;
