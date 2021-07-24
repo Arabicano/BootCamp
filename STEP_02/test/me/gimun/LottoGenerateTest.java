@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LottoGenerateTest {
 
     @Test
-    void generate() {
+    void 로또생성() {
         LottoGenerate lottoGenerate = new LottoGenerate();
 
         lottoGenerate.generate();

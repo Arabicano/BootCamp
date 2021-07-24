@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BuyLottoTest {
     @Test
-    public void BuyLotto(){
+    public void 로또구매(){
         BuyLotto buyLotto = new BuyLotto(5500);
 
         assertEquals(buyLotto.getLottoCnt(),5);

@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ConfirmWinningTest {
 
     @Test
-    void confirmLotto() {
+    void 당첨확인() {
         //로또생성
         LottoGenerate lottoGenerate = new LottoGenerate();
         lottoGenerate.generate();

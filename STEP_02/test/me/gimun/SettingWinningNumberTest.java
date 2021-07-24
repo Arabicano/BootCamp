@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SettingWinningNumberTest {
 
     @Test
-    void winningNumSet() {
+    void 당첨번호설정() {
         SettingWinningNumber settingWinningNumber = new SettingWinningNumber();
         Set<Integer> set = new HashSet<>();
         set.add(3);
