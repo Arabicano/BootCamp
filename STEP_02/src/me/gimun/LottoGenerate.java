@@ -27,5 +27,7 @@ public class LottoGenerate {
         return lotto;
     }
 
-
+    public void setLotto(List<Integer> lotto) {
+        this.lotto = lotto;
+    }
 }
