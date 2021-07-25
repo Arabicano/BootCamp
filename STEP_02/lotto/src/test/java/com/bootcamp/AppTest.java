@@ -1,6 +1,5 @@
 package com.bootcamp;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -23,7 +22,7 @@ public class AppTest {
     void initAll() {
         inputservice = new InputService();
     }
-    
+
     // Test1
     @Test
     public void 로또구매값받기() {
@@ -35,10 +34,9 @@ public class AppTest {
 
     // STEP1. 로또 구매 시
     @Test
-    public void 로또구매숫자값외의잘못된값입력() {
-        
-        // 숫자값외의 잘못된 값입력
-        String input = "qwer";
+    void 로또구매시숫자값외의잘못된값입력() {
+
+        String input = "qwer"; // 숫자값 외의 잘못된 값
         OutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -50,12 +48,12 @@ public class AppTest {
     }
 
     @Test
-    public void 로또값보다작은값입력() {
+    void 로또구매시로또가격보다작은값입력() {
         // TODO
     }
 
     @Test
-    public void 로또값보다큰값입력() {
+    void 로또구매시로또가격보다큰값입력() {
         // TODO : success
     }
 
@@ -66,7 +64,7 @@ public class AppTest {
     }
 
     @Test
-    public void 총로또장수보다큰값입력() {
+    void 수동로또장수결정시총로또장수보다큰값입력() {
         // TODO
     }
 
@@ -74,35 +72,35 @@ public class AppTest {
     public void 마이너스값입력() {
         // TODO
     }
-    
+
     @Test
-    public void 총로또장수보다작지만영이상의값입력시() {
+    public void 총로또장수보다작지만영이상의값입력() {
         // TODO : success
     }
 
     // STEP3. 수동 로또번호 입력
     @Test
-    void 로또번호숫자값외의잘못된값입력() {
-        // TODO
-    }
-    
-    @Test
-    void 영이하의값입력() {
+    void 수동로또번호입력시로또번호숫자값외의잘못된값입력() {
         // TODO
     }
 
     @Test
-    void 사십오초과값입력() {
+    void 수동로또번호입력시영이하의값입력() {
         // TODO
     }
 
     @Test
-    void 이미입력한로또번호재입력시() {
+    void 수동로또번호입력시사십오초과값입력() {
         // TODO
     }
 
     @Test
-    void 여섯의중복되지않은숫자값입력시() {
+    void 수동로또번호입력시이미입력한로또번호재입력() {
+        // TODO
+    }
+
+    @Test
+    void 수동로또번호입력시여섯의중복되지않은숫자값입력() {
         // TODO : success
     }
 
@@ -115,12 +113,12 @@ public class AppTest {
     }
 
     @Test
-    void 영이하의값또는사십오초과의값입력() {
+    void 당첨번호입력시영이하의값또는사십오초과의값입력() {
         // TODO
     }
 
     @Test
-    void 이미입력한당첨번호중복입력시() {
+    void 당첨번호입력시이미입력한당첨번호중복입력시() {
         // TODO
     }
 
