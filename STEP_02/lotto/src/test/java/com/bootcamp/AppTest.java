@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import com.bootcamp.lotto.service.InputService;
 import com.bootcamp.lotto.service.LottoService;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -20,10 +21,21 @@ import org.junit.jupiter.api.Test;
 public class AppTest {
 
     private static LottoService lottoService;
+    private static InputService inputservice;
 
     @BeforeEach
-    static void initAll() {
+    void initAll() {
         lottoService = new LottoService();
+        inputservice = new InputService();
+    }
+    
+    // Test1
+    @Test
+    public void 로또구매값받기() {
+        String[] reqMsg = { "로또는 한 장당 1000원으로 판매됩니다.", "로또 구매를 위한 금액을 입력해주세요(숫자만입력)." };
+        String errorMsg = "잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.";
+
+        inputservice.reqInputInteger(reqMsg, errorMsg);
     }
 
     // STEP1. 로또 구매 시

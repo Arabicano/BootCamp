@@ -1,7 +1,6 @@
 package com.bootcamp.lotto.service;
 
 import java.util.HashSet;
-import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -12,6 +11,11 @@ import com.bootcamp.lotto.model.Lotto;
 public class LottoService {
 
     Scanner sc = new Scanner(System.in);
+
+    InputService inputservice = new InputService();
+
+    static final int LOTTO_PRICE = 1000;
+
 
     // CASE 1. 로또 구매
     public Set<Lotto> buyLotto() {
@@ -89,7 +93,7 @@ public class LottoService {
             System.out.println(lotto.toString() + " -> 결과 : " + result);
         }
 
-        double profitRate = ((prize - (lottos.size()*1000))/(lottos.size()*1000)) * 100;
+        double profitRate = ((prize - (lottos.size()*LOTTO_PRICE))/(lottos.size()* LOTTO_PRICE)) * 100;
 
         System.out.printf("최종결과: 1등 %d개, 2등 %d개, 3등 %d개, 4등 %d개, 5등 %d개", first, second, third, fourth, fifth, bomb);
         System.out.println();
@@ -102,36 +106,33 @@ public class LottoService {
         int counts = 0; // 구매한 로또
 
         // 1. 로또 구매를 위해 금액 입력받기
+        // 1_0. 숫자 외의 다른 값인 경우, 다시 입력받기
+        String[] reqMsg = {"로또는 한 장당 1000원으로 판매됩니다.", "로또 구매를 위한 금액을 입력해주세요(숫자만입력)."};
+        String errorMsg = "잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.";
+        
         do {
-            try {
-                System.out.println("로또는 한 장당 1000원으로 판매됩니다.");
-                System.out.println("로또 구매를 위한 금액을 입력해주세요(숫자만입력).");
-                money = sc.nextInt();
-            } catch (InputMismatchException e) {
-                // 2. 입력받은 금액에 따른 처리
-                // 2_0. 숫자 외의 다른 값인 경우, 다시 입력받기
-                System.out.println("잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.");
-                sc.nextLine();
-                continue;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            money = inputservice.reqInputInteger(reqMsg, errorMsg);
+
+            // 2. 입력받은 금액에 따른 분기
             // 2_1. 입력한 금액이 로또 금액보다 작을 경우
+            // 2_2. 입력한 금액에서 나머지 금액은 잔액처리
+            // 2_3. 로또 장수가 1보다 클 경우 로또 구매 자동수동 여부 확인
             if (money != 0) {
-                if (money < 1000) {
+                if (money < LOTTO_PRICE) {
                     System.out.println("로또 구매의 최소 금액은 1000원 입니다.");
                     money = 0;
                 } else {
-                    if ((money % 1000) > 0) {
+                    if ((money % LOTTO_PRICE) > 0) {
                         // 2_2. 입력한 금액에서 나머지 금액은 잔액처리
-                        int change = money % 1000;
+                        int change = money % LOTTO_PRICE;
                         System.out.println("내신 금액에서 거스름돈 " + change + "은(는) 돌려드립니다.");
                     }
-                    // 2_3. 로또 장수가 1보다 클 경우 로또 구매 자동수동 여부 확인
-                    counts = money / 1000;
+
+                    counts = money / LOTTO_PRICE;
                     System.out.println(counts + "장의 로또를 구매합니다.");
                 }
             }
+
         } while (money == 0);
 
         return counts;
@@ -140,21 +141,15 @@ public class LottoService {
     // 수동 로또 구매 장수
     public int getNonAutoLottoCount(int lottoCount) {
         // 3. 로또 구매 장수에 따른 수동 갯수 받기
+        // 3_0. 숫자(자연수) 외의 다른 값인 경우, 다시 입력 받기
         int nonAutoCount = -1;
 
-        // Scanner sc = new Scanner(System.in);
+        String[] reqMsg = {"몇 장을 수동으로 입력하시겠습니까?(숫자만)"};
+        String errorMsg = "잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.";
+
         do {
-            try {
-                System.out.println("몇 장을 수동으로 입력하시겠습니까?(숫자만)");
-                nonAutoCount = sc.nextInt();
-            } catch (InputMismatchException e) {
-                // 3_0. 숫자(자연수) 외의 다른 값인 경우, 다시 입력 받기
-                System.out.println("잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.");
-                sc.nextLine();
-                continue;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            nonAutoCount = inputservice.reqInputInteger(reqMsg, errorMsg);
+
             if (nonAutoCount < 0 || nonAutoCount > lottoCount) {
                 // 3_1. 입력한 값이 로또 구매 장수보다 크거나 잘못된 값일 경우 다시 입력받기
                 System.out.println("잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.");
@@ -173,31 +168,24 @@ public class LottoService {
 
         Set<Integer> lottoSet = new TreeSet<>();
 
-        // Scanner sc = new Scanner(System.in);
-
         // 1. 로또 값 입력
         for (int j = 1; j <= 6; j++) {
             int num = 0;
             boolean flag = false;
+
+            String[] reqMsg = { j + "번째 숫자 : 1 ~ 45 사이의 숫자를 입력하세요."};
+            String errorMsg = "잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.";
+
             do {
-                try {
-                    System.out.println(j + "번째 숫자 : 1 ~ 45 사이의 숫자를 입력하세요.");
-                    num = sc.nextInt();
-                } catch (InputMismatchException e) {
-                    // 1_1. 숫자(자연수) 외의 다른 값인 경우, 다시 입력 받기
-                    System.out.println("잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.");
-                    sc.nextLine();
-                    continue;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                num = inputservice.reqInputInteger(reqMsg, errorMsg);
+             
                 // 1_2. 1~45 사이의 값 이외의 다른 값인 경우, 다시 입력받기
+                // 1_3. 입력값이 이미 존재하는 값인지 판단하기
                 if (num <= 0 || num > 45) {
                     System.out.println("잘못된 숫자를 입력했습니다. 다시 입력해주세요.");
                     continue;
                 }
 
-                // 1_3. 입력값이 이미 존재하는 값인지 판단하기
                 if (lottoSet.contains(num)) {
                     System.out.println("이미 입력한 숫자입니다. 다시 입력해주세요.");
                     continue;
@@ -252,18 +240,12 @@ public class LottoService {
     private Lotto getNonAutoWinnerLotto() {
         Lotto lotto = setNonAutoLotto();
         int bonusNum = 0;
+
+        String[] reqMsg = {"보너스 번호를 입력해주세요."};
+        String errorMsg = "잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.";
+
         do {
-            try {
-                System.out.println("보너스 번호를 입력해주세요.");
-                bonusNum = sc.nextInt();
-            } catch (InputMismatchException e) {
-                // 3_0. 숫자(자연수) 외의 다른 값인 경우, 다시 입력 받기
-                System.out.println("잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.");
-                sc.nextLine();
-                continue;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            bonusNum = inputservice.reqInputInteger(reqMsg, errorMsg);
 
             if (bonusNum <= 0 || bonusNum > 45 || lotto.getNumbers().contains(bonusNum)) {
                 bonusNum = 0;
