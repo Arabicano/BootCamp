@@ -1,6 +1,5 @@
 package com.bootcamp.lotto.service;
 
-import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -13,42 +12,9 @@ public class LottoService {
     Scanner sc = new Scanner(System.in);
 
     InputService inputservice = new InputService();
+    CreateLottoService createLottoService = new CreateLottoService();
 
     static final int LOTTO_PRICE = 1000;
-
-
-    // CASE 1. 로또 구매
-    public Set<Lotto> buyLotto() {
-        // 1. 로또 구매를 위한 금액 받고 로또 장수 계산하기
-        int lottoCount = getLottoCount();
-
-        // 2. 로또 장수에 따른 수동 갯수 받기
-        int nonAutoLotto = getNonAutoLottoCount(lottoCount);
-
-        // 3. 구매한 로또
-        Set<Lotto> lottos = new HashSet<>();
-
-        // 3. 수동 갯수에 따른 로또 번호 받기
-        for (int i = 1; i <= nonAutoLotto; i++) {
-            System.out.println("< 수동로또 : " + i + " 번째 >");
-            Lotto lotto = setNonAutoLotto();
-            lottos.add(lotto);
-            System.out.println();
-        }
-
-        // 4. 자동 갯수(전체로또갯수-수동갯수)에 따른 로또 번호 받기
-        int autoLotto = lottoCount - nonAutoLotto;
-        // 4_0. 자동 갯수가 0인 경우 이 과정을 생략한다.
-        if (autoLotto != 0) {
-            System.out.println("< 자동로또 : " + autoLotto+ "장 구매 >");
-            for (int j = 1; j <= autoLotto; j++) {
-                Lotto lotto = getAutoLotto(j);
-                lottos.add(lotto);
-            }
-        }
-
-        return lottos;
-    }
 
     // CASE 2. 당첨확인하기
     public void getResultOfLotto(Set<Lotto> lottos) {
@@ -100,121 +66,6 @@ public class LottoService {
         System.out.printf("수익금은 %d원으로 수익률은 %.0f%% 입니다.", prize, profitRate);
     }
 
-    // 로또 구매 장수
-    public int getLottoCount() {
-        int money = 0; // 사용자가 낸 돈
-        int counts = 0; // 구매한 로또
-
-        // 1. 로또 구매를 위해 금액 입력받기
-        // 1_0. 숫자 외의 다른 값인 경우, 다시 입력받기
-        String[] reqMsg = {"로또는 한 장당 1000원으로 판매됩니다.", "로또 구매를 위한 금액을 입력해주세요(숫자만입력)."};
-        String errorMsg = "잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.";
-        
-        do {
-            money = inputservice.reqInputInteger(reqMsg, errorMsg);
-
-            // 2. 입력받은 금액에 따른 분기
-            // 2_1. 입력한 금액이 로또 금액보다 작을 경우
-            // 2_2. 입력한 금액에서 나머지 금액은 잔액처리
-            // 2_3. 로또 장수가 1보다 클 경우 로또 구매 자동수동 여부 확인
-            if (money != 0) {
-                if (money < LOTTO_PRICE) {
-                    System.out.println("로또 구매의 최소 금액은 1000원 입니다.");
-                    money = 0;
-                } else {
-                    if ((money % LOTTO_PRICE) > 0) {
-                        // 2_2. 입력한 금액에서 나머지 금액은 잔액처리
-                        int change = money % LOTTO_PRICE;
-                        System.out.println("내신 금액에서 거스름돈 " + change + "은(는) 돌려드립니다.");
-                    }
-
-                    counts = money / LOTTO_PRICE;
-                    System.out.println(counts + "장의 로또를 구매합니다.");
-                }
-            }
-
-        } while (money == 0);
-
-        return counts;
-    }
-
-    // 수동 로또 구매 장수
-    public int getNonAutoLottoCount(int lottoCount) {
-        // 3. 로또 구매 장수에 따른 수동 갯수 받기
-        // 3_0. 숫자(자연수) 외의 다른 값인 경우, 다시 입력 받기
-        int nonAutoCount = -1;
-
-        String[] reqMsg = {"몇 장을 수동으로 입력하시겠습니까?(숫자만)"};
-        String errorMsg = "잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.";
-
-        do {
-            nonAutoCount = inputservice.reqInputInteger(reqMsg, errorMsg);
-
-            if (nonAutoCount < 0 || nonAutoCount > lottoCount) {
-                // 3_1. 입력한 값이 로또 구매 장수보다 크거나 잘못된 값일 경우 다시 입력받기
-                System.out.println("잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.");
-                sc.nextLine();
-                nonAutoCount = -1;
-            } else {
-                System.out.println(nonAutoCount + "장을 수동으로 구매합니다.");
-            }
-        } while (nonAutoCount < 0);
-
-        return nonAutoCount;
-    }
-
-    // 수동 로또 구매
-    private Lotto setNonAutoLotto() {
-
-        Set<Integer> lottoSet = new TreeSet<>();
-
-        // 1. 로또 값 입력
-        for (int j = 1; j <= 6; j++) {
-            int num = 0;
-            boolean flag = false;
-
-            String[] reqMsg = { j + "번째 숫자 : 1 ~ 45 사이의 숫자를 입력하세요."};
-            String errorMsg = "잘못된 값을 입력하였습니다. 다시 입력하여 주십시오.";
-
-            do {
-                num = inputservice.reqInputInteger(reqMsg, errorMsg);
-             
-                // 1_2. 1~45 사이의 값 이외의 다른 값인 경우, 다시 입력받기
-                // 1_3. 입력값이 이미 존재하는 값인지 판단하기
-                if (num <= 0 || num > 45) {
-                    System.out.println("잘못된 숫자를 입력했습니다. 다시 입력해주세요.");
-                    continue;
-                }
-
-                if (lottoSet.contains(num)) {
-                    System.out.println("이미 입력한 숫자입니다. 다시 입력해주세요.");
-                    continue;
-                } else {
-                    lottoSet.add(num);
-                    flag = true;
-                }
-
-            } while (!flag);
-        }
-
-        return new Lotto(lottoSet);
-    }
-
-    // 자동 로또
-    private Lotto getAutoLotto(int j) {
-        // 조건1. 랜덤으로 1~45 사이의 6개의 숫자 조합
-        // 조건2. 중복불가/ 번호 정렬
-        Random random = new Random(); // 랜덤 객체
-
-        Set<Integer> lottoSet = new TreeSet<>();
-
-        while (lottoSet.size() != 6) {
-            int i = random.nextInt(45) + 1; // (1이상 45이하) + 1
-            lottoSet.add(i);
-        }
-
-        return new Lotto(lottoSet);
-    }
 
     // 자동 당첨 로또
     private Lotto getAutoWinnerLotto() {
@@ -238,7 +89,7 @@ public class LottoService {
 
     // 수동 당첨 로또
     private Lotto getNonAutoWinnerLotto() {
-        Lotto lotto = setNonAutoLotto();
+        Lotto lotto = createLottoService.createNonAutoLotto();
         int bonusNum = 0;
 
         String[] reqMsg = {"보너스 번호를 입력해주세요."};
