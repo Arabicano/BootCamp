@@ -13,7 +13,7 @@ public class Main {
         BuyLotto buyLotto = new BuyLotto(input);
         //로또 당첨번호 입력
         System.out.println("로또 당첨번호를 순서대로 입력 하세요.");
-        SettingWinningNumber settingWinningNumber = new SettingWinningNumber();
+
         Set<Integer> set = new HashSet<>();
         int ii =1;
         while (set.size() != 6){
@@ -29,7 +29,7 @@ public class Main {
         System.out.println("보너스번호를 입력 하세요.");
         br = new BufferedReader(new InputStreamReader(System.in));
         winningLotto.add(Integer.parseInt(br.readLine()));
-        settingWinningNumber.winningNumSet(winningLotto);
+        SetWinNum setWinNum = new SetWinNum(winningLotto);
 
         //로또 구매 내역 출력
         System.out.println("로또 구매 장수 : " + buyLotto.getLottoCnt());
@@ -62,12 +62,12 @@ public class Main {
         }
 
         //당첨 내역 출력
-        System.out.println("당첨번호 : " + settingWinningNumber.getWinningLotto());
-        System.out.println("보너스번호 : " + settingWinningNumber.getWinningBonusNum());
+        System.out.println("당첨번호 : " + setWinNum.getWinningLotto());
+        System.out.println("보너스번호 : " + setWinNum.getWinningBonusNum());
         ConfirmWinning confirmWinning = new ConfirmWinning();
         List<String> list = new ArrayList<String>();
         for (int i=0; i < buyLottoList.size(); i++){
-            String result = confirmWinning.confirmLotto(settingWinningNumber.getWinningLotto(),settingWinningNumber.getWinningBonusNum(),buyLottoList.get(i));
+            String result = confirmWinning.confirmLotto(setWinNum.getWinningLotto(), setWinNum.getWinningBonusNum(),buyLottoList.get(i));
             list.add(result);
             System.out.println(i+1 + "번 로또 : " + buyLottoList.get(i) + " 당첨종류 : " + result);
         }
