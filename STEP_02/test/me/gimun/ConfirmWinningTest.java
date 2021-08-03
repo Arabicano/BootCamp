@@ -1,5 +1,6 @@
 package me.gimun;
 
+import me.gimun.domain.LottoNumber;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -9,9 +10,7 @@ class ConfirmWinningTest {
     @Test
     void 당첨확인() {
         //로또생성
-        LottoGenerate lottoGenerate = new LottoGenerate();
-        lottoGenerate.generate();
-        List<Integer> lotto = lottoGenerate.getLotto();
+        List<LottoNumber> lotto = LottoGenerate.generate();
 
         //당첨번호 지정
         Set<Integer> set = new HashSet<>();
@@ -33,8 +32,11 @@ class ConfirmWinningTest {
         //당첨확인
         ConfirmWinning confirmWinning = new ConfirmWinning();
         String result = confirmWinning.confirmLotto(setWinNum.getWinningLotto(), setWinNum.getWinningBonusNum(),lotto);
-
-        System.out.println("내가 구매한 로또 번호 : " + lotto);
+        List<Integer> buyLotto = new ArrayList<>();
+        for (LottoNumber lottoNum : lotto) {
+            buyLotto.add(lottoNum.getNumber());
+        }
+        System.out.println("내가 구매한 로또 번호 : " + buyLotto);
         System.out.println("당첨번호 : " + setWinNum.getWinningLotto() + " 보너스번호 : " + setWinNum.getWinningBonusNum());
         System.out.println("당첨확인 : " + result);
     }
