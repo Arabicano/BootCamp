@@ -1,5 +1,6 @@
 package me.gimun;
 
+import me.gimun.domain.LottoNumber;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -10,13 +11,14 @@ class LottoGenerateTest {
 
     @Test
     void 로또생성() {
-        LottoGenerate lottoGenerate = new LottoGenerate();
 
-        lottoGenerate.generate();
-        List<Integer> lotto = lottoGenerate.getLotto();
+        List<LottoNumber> lotto = LottoGenerate.generate();
 
         assertNotNull(lotto);
 
-        System.out.println(lotto);
+        for (LottoNumber lottoNum : lotto) {
+
+            System.out.println(lottoNum.getNumber());
+        }
     }
 }

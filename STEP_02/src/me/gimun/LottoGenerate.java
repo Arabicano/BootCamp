@@ -1,33 +1,25 @@
 package me.gimun;
 
+import me.gimun.domain.LottoNumber;
+
 import java.util.*;
 
 public class LottoGenerate {
-    private List<Integer> lotto;
+    private static final int LOTTO_SIZE = 6;
 
-    public LottoGenerate() {
-        this.lotto = new ArrayList<Integer>();
+    public static List<LottoNumber> generate() {
+        List<LottoNumber> lottoNumbers = new ArrayList<>(LottoNumber.getCACHE());
+        Collections.shuffle(lottoNumbers);
+
+        List<LottoNumber> generatedNumber = lottoNumbers.subList(0, LOTTO_SIZE);
+
+        Collections.sort(generatedNumber, new Comparator<LottoNumber>() {
+            @Override
+            public int compare(LottoNumber num1, LottoNumber num2) {
+                return Integer.valueOf(num1.getNumber()).compareTo(Integer.valueOf(num2.getNumber()));
+            }
+        });
+        return generatedNumber;
     }
 
-    public void generate(){
-        Set<Integer> set = new HashSet<>();
-        Random random = new Random();
-        while (set.size() != 6){
-            set.add(random.nextInt(45 ) + 1);
-        }
-
-        this.lotto.addAll(set);
-
-        // 정렬
-        Collections.sort(this.lotto);
-
-    }
-
-    public List<Integer> getLotto() {
-        return lotto;
-    }
-
-    public void setLotto(List<Integer> lotto) {
-        this.lotto = lotto;
-    }
 }
