@@ -3,6 +3,7 @@ package me.gimun.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class LottoNumber {
     private static final int LOTTO_NUMBER_LOWER_BOUND = 1;
@@ -10,9 +11,10 @@ public class LottoNumber {
     private static final List<LottoNumber> CACHE = new ArrayList<>();
 
     static {
-        for (int i = LOTTO_NUMBER_LOWER_BOUND; i <= LOTTO_NUMBER_UPPER_BOUND; i++) {
+        IntStream stream = IntStream.rangeClosed(LOTTO_NUMBER_LOWER_BOUND, LOTTO_NUMBER_UPPER_BOUND);
+        stream.forEach(i -> {
             CACHE.add(new LottoNumber(i));
-        }
+        });
     }
 
     private final int number;
