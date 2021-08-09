@@ -12,13 +12,7 @@ public class LottoGenerate {
         Collections.shuffle(lottoNumbers);
 
         List<LottoNumber> generatedNumber = lottoNumbers.subList(0, LOTTO_SIZE);
-
-        Collections.sort(generatedNumber, new Comparator<LottoNumber>() {
-            @Override
-            public int compare(LottoNumber num1, LottoNumber num2) {
-                return Integer.valueOf(num1.getNumber()).compareTo(Integer.valueOf(num2.getNumber()));
-            }
-        });
+        Collections.sort(generatedNumber, (n1,n2) -> Integer.compare(n1.getNumber(), n2.getNumber()));
         return generatedNumber;
     }
 
