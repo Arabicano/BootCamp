@@ -38,7 +38,7 @@ public class LottoNumber {
     }
 
     public static List<LottoNumber> getCACHE() {
-        return CACHE;
+        return new ArrayList<>(CACHE);
     }
 
     public int getNumber() {
