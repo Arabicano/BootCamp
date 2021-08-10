@@ -56,7 +56,7 @@ public class Main {
                     jj++;
                 }
             }else{
-                lotto = LottoGenerate.generate();
+                lotto = new LottoGenerate().generate();
             }
             buyLottoList.add(lotto);
         }

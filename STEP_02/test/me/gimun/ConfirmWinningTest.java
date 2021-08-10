@@ -10,7 +10,7 @@ class ConfirmWinningTest {
     @Test
     void 당첨확인() {
         //로또생성
-        List<LottoNumber> lotto = LottoGenerate.generate();
+        List<LottoNumber> lotto = new LottoGenerate().generate();
 
         //당첨번호 지정
         Set<Integer> set = new HashSet<>();
