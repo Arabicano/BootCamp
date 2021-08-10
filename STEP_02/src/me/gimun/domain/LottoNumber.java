@@ -12,9 +12,7 @@ public class LottoNumber {
 
     static {
         IntStream stream = IntStream.rangeClosed(LOTTO_NUMBER_LOWER_BOUND, LOTTO_NUMBER_UPPER_BOUND);
-        stream.forEach(i -> {
-            CACHE.add(new LottoNumber(i));
-        });
+        stream.forEach(i -> CACHE.add(new LottoNumber(i)));
     }
 
     public static LottoNumber valueOf(final int number) {
