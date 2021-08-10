@@ -17,13 +17,6 @@ public class LottoNumber {
         });
     }
 
-    private final int number;
-
-    public LottoNumber(final int number) {
-        validate(number);
-        this.number = number;
-    }
-
     public static LottoNumber valueOf(final int number) {
         LottoNumber lottoNumber = CACHE.get(number);
 
@@ -33,17 +26,26 @@ public class LottoNumber {
         return lottoNumber;
     }
 
+    public static List<LottoNumber> getCACHE() {
+        return new ArrayList<>(CACHE);
+    }
+
+    private final int number;
+
     private void validate(final int number) {
         if (number < LOTTO_NUMBER_LOWER_BOUND || number > LOTTO_NUMBER_UPPER_BOUND) {
             throw new IllegalArgumentException("LottoNumber가 유효하지 않습니다.");
         }
     }
 
-    public static List<LottoNumber> getCACHE() {
-        return new ArrayList<>(CACHE);
+    public LottoNumber(final int number) {
+        validate(number);
+        this.number = number;
     }
 
     public int getNumber() {
         return number;
     }
+
+
 }
