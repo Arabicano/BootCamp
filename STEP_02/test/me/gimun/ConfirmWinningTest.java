@@ -25,9 +25,10 @@ class ConfirmWinningTest {
         winningLotto.addAll(set);
         Collections.sort(winningLotto);
 
-        //보너스번호
-        winningLotto.add(45);
         SetWinNum setWinNum = new SetWinNum(winningLotto);
+
+        //보너스번호
+        setWinNum.setBounsNum(45);
 
         //당첨확인
         ConfirmWinning confirmWinning = new ConfirmWinning();

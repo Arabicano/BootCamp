@@ -23,10 +23,11 @@ class SetWinNumTest {
         winningLotto.addAll(set);
         Collections.sort(winningLotto);
 
-        //보너스번호
-        winningLotto.add(45);
 
         SetWinNum setWinNum = new SetWinNum(winningLotto);
+
+        //보너스번호
+        setWinNum.setBounsNum(45);
 
         assertEquals(setWinNum.getWinningLotto().get(0),3);
         assertEquals(setWinNum.getWinningLotto().get(5),31);

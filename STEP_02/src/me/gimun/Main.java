@@ -28,10 +28,11 @@ public class Main {
         winningLotto.addAll(set);
         Collections.sort(winningLotto);
 
+        SetWinNum setWinNum = new SetWinNum(winningLotto);
         System.out.println("보너스번호를 입력 하세요.");
         br = new BufferedReader(new InputStreamReader(System.in));
-        winningLotto.add(Integer.parseInt(br.readLine()));
-        SetWinNum setWinNum = new SetWinNum(winningLotto);
+        //보너스번호
+        setWinNum.setBounsNum(Integer.parseInt(br.readLine()));
 
         //로또 구매 내역 출력
         System.out.println("로또 구매 장수 : " + lottoStore.getLottoCnt());

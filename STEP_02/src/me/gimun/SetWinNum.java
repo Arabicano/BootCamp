@@ -9,14 +9,16 @@ public class SetWinNum {
 
     public SetWinNum(List<Integer> lotto) {
         this.winningLotto = new ArrayList<>();
-        //로또 길이가 7이 아니면 에러
-        if(lotto.size() != 7){
-            throw new IllegalArgumentException();
+        //로또 길이가 6이 아니면 에러
+        if(lotto.size() != 6){
+            throw new IllegalArgumentException("Lotto 길이가 6이 아닙니다.");
         }
 
-        this.winningBonusNum = lotto.get(lotto.size()-1);
-        lotto.remove(lotto.size()-1);
         this.winningLotto = lotto;
+    }
+
+    public void setBounsNum(int bounsNum){
+        this.winningBonusNum = bounsNum;
     }
 
 
