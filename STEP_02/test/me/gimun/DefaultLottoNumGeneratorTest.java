@@ -8,12 +8,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LottoGenerateTest {
+class DefaultLottoNumGeneratorTest {
 
     @Test
     void 로또생성() {
 
-        List<LottoNumber> lotto = new LottoGenerate().generate();
+        List<LottoNumber> lotto = new DefaultLottoNumGenerator().generate();
 
         assertNotNull(lotto.get(0).getNumber());
 
