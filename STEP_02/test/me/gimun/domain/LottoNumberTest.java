@@ -40,7 +40,11 @@ class LottoNumberTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> new LottoNumber(0));
         String message = exception.getMessage();
 
+        IllegalArgumentException exception2 = assertThrows(IllegalArgumentException.class, ()-> new LottoNumber(46));
+        String message2 = exception.getMessage();
+
         assertEquals("LottoNumber가 유효하지 않습니다.",message);
+        assertEquals("LottoNumber가 유효하지 않습니다.",message2);
 
     }
 }

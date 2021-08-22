@@ -3,16 +3,18 @@ package me.gimun.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class LottoNumber {
     private static final int LOTTO_NUMBER_LOWER_BOUND = 1;
     private static final int LOTTO_NUMBER_UPPER_BOUND = 45;
-    private static final List<LottoNumber> CACHE = new ArrayList<>();
+    private static final List<LottoNumber> CACHE;
 
     static {
         IntStream stream = IntStream.rangeClosed(LOTTO_NUMBER_LOWER_BOUND, LOTTO_NUMBER_UPPER_BOUND);
-        stream.forEach(i -> CACHE.add(new LottoNumber(i)));
+        CACHE = stream.mapToObj(i -> new LottoNumber(i)).collect(Collectors.toList());
+//        stream.forEach(i -> CACHE.add(new LottoNumber(i)));
     }
 
     public static LottoNumber valueOf(final int number) {
