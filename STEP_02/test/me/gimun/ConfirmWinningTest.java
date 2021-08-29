@@ -11,7 +11,6 @@ class ConfirmWinningTest {
     void 당첨확인() {
         //로또생성
         List<LottoNumber> lotto = new DefaultLottoNumGenerator().generate();
-
         //당첨번호 지정
         Set<Integer> set = new HashSet<>();
         set.add(3);
