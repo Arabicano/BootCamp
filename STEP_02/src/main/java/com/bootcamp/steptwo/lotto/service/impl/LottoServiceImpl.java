@@ -1,5 +1,6 @@
 package com.bootcamp.steptwo.lotto.service.impl;
 
+import com.bootcamp.steptwo.lotto.model.consts.LottoConst;
 import com.bootcamp.steptwo.lotto.model.dto.ChangeDto;
 import com.bootcamp.steptwo.lotto.service.LottoService;
 
@@ -18,7 +19,8 @@ public class LottoServiceImpl implements LottoService {
         int change = 0;
 
         if (money < LOTTO_PRICE) {
-            // 1. TODO 예외 처리
+            // 1. 예외 처리
+            throw LottoConst.ErrorCode.LESS_THAN_PRICE.throwException();
         } else {
             // 2. 구매 장수와 나머지 반환
             countOfLotto = money / LOTTO_PRICE;
