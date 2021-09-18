@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 public interface LottoService {
 
     // 로또 구매
-    ChangeDto buyLotto(int money);
+    ChangeDto buyLotto(Integer money);
 
 }
