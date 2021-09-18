@@ -2,12 +2,12 @@ package com.bootcamp.steptwo.lotto.service.impl;
 
 import com.bootcamp.steptwo.lotto.model.consts.LottoConst;
 import com.bootcamp.steptwo.lotto.model.dto.ChangeDto;
-import com.bootcamp.steptwo.lotto.service.LottoService;
+import com.bootcamp.steptwo.lotto.service.BuyLottoService;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class LottoServiceImpl implements LottoService {
+public class BuyLottoServiceImpl implements BuyLottoService {
     
     public static final int LOTTO_PRICE = 1_000;
 

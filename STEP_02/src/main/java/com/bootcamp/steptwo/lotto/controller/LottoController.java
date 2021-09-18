@@ -1,7 +1,7 @@
 package com.bootcamp.steptwo.lotto.controller;
 
 import com.bootcamp.steptwo.lotto.model.dto.ChangeDto;
-import com.bootcamp.steptwo.lotto.service.LottoService;
+import com.bootcamp.steptwo.lotto.service.BuyLottoService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,12 +15,12 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(value = "/api/v1/lottos")
 public class LottoController {
 
-    private final LottoService lottoService;
+    private final BuyLottoService buyLottoService;
 
     @PostMapping("/buy")
     public ChangeDto buyLotto(@RequestBody Integer money) {
 
-        ChangeDto countLotto = lottoService.buyLotto(money);
+        ChangeDto countLotto = buyLottoService.buyLotto(money);
 
         return countLotto;
     }

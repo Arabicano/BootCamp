@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.bootcamp.steptwo.lotto.model.consts.LottoConst;
 import com.bootcamp.steptwo.lotto.model.dto.ChangeDto;
-import com.bootcamp.steptwo.lotto.service.LottoService;
+import com.bootcamp.steptwo.lotto.service.BuyLottoService;
 import com.bootcamp.steptwo.util.ApiCommonException;
 
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class LottoBuyTests {
     
     // 로또 구매 서비스
     @Autowired
-    private LottoService lottoService;
+    private BuyLottoService lottoService;
 
     @Test
     void 로또구매_금액미달() {
