@@ -1,4 +1,4 @@
-package com.study.bootcamp;
+package com.bootcamp.steptwo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
