@@ -8,7 +8,7 @@ import com.bootcamp.steptwo.lotto.model.dto.LottoCreateDto;
 public interface CreateLottoService {
 
     /**
-     * 로또 구매
+     * 로또 생성
      * @return
      */
     List<Lotto> createLotto(LottoCreateDto lottoCreateDto);

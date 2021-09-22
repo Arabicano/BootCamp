@@ -1,5 +1,6 @@
 package com.bootcamp.steptwo.lotto.service.impl;
 
+import com.bootcamp.steptwo.lotto.model.Lotto;
 import com.bootcamp.steptwo.lotto.model.consts.LottoConst;
 import com.bootcamp.steptwo.lotto.model.dto.ChangeDto;
 import com.bootcamp.steptwo.lotto.service.BuyLottoService;
@@ -9,8 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class BuyLottoServiceImpl implements BuyLottoService {
     
-    public static final int LOTTO_PRICE = 1_000;
-
     @Override
     public ChangeDto buyLotto(Integer money) {
         /**
@@ -21,13 +20,13 @@ public class BuyLottoServiceImpl implements BuyLottoService {
         int countOfLotto = 0;
         int change = 0;
 
-        if (money < LOTTO_PRICE) {
+        if (money < Lotto.LOTTO_PRICE) {
             // 1. 예외 처리
             throw LottoConst.ErrorCode.LESS_THAN_PRICE.throwException();
         } else {
             // 2. 구매 장수와 나머지 반환
-            countOfLotto = money / LOTTO_PRICE;
-            change = money - countOfLotto * LOTTO_PRICE;
+            countOfLotto = money / Lotto.LOTTO_PRICE;
+            change = money - countOfLotto * Lotto.LOTTO_PRICE;
         }
 
         return new ChangeDto(countOfLotto, change);
