@@ -7,6 +7,7 @@ import java.util.List;
 import com.bootcamp.lotto.model.Lotto;
 import com.bootcamp.lotto.model.dto.ChangeDto;
 import com.bootcamp.lotto.model.dto.LottoCreateDto;
+import com.bootcamp.lotto.model.dto.ResultLottoDto;
 import com.bootcamp.lotto.model.dto.WinningLottoDto;
 import com.bootcamp.lotto.service.BuyLottoService;
 import com.bootcamp.lotto.service.CreateLottoService;
@@ -69,20 +70,20 @@ public final class App {
 
         List<Lotto> lottos = createLottoService.createLotto(lottoCreateDto);
         
-        // 구매한 로또 번호 출력
-        System.out.println();
-        System.out.println("----------------- " + "구매한 로또 번호 출력" + " -----------------");
-        for(Lotto lotto : lottos) {
-           System.out.println(lotto.toString());
-        }
-        
         // 로또 결과
         System.out.println();
         System.out.println("로또 결과를 확인합니다.");
-        System.out.println("----------------- " + "로또 결과" + " -----------------");
         WinLottoService winLottoService = new WinLottoServiceImpl();
         WinningLottoDto winResult = winLottoService.getResultLotto(lottos);
-
+        
+        // 구매한 로또 번호 출력
+        System.out.println();
+        System.out.println("----------------- " + "구매한 로또 번호 출력" + " -----------------");
+        for (ResultLottoDto lotto : winResult.getResults()) {
+            System.out.println(lotto.toString());
+        }
+        
+        System.out.println("----------------- " + "로또 결과" + " -----------------");
         System.out.println(winResult.toString());
         System.out.println("---------------------------------------------");
         System.out.println();
