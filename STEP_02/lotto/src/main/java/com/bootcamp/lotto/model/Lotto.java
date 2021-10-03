@@ -6,8 +6,6 @@ import lombok.Getter;
 
 @Getter
 public class Lotto {
-    public static final int LOTTO_PRICE = 1_000;
-
     private Set<Integer> numbers;
     private Integer bonusNum;
 

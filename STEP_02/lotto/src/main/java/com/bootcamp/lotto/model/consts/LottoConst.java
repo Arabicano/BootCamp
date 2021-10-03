@@ -3,6 +3,17 @@ package com.bootcamp.lotto.model.consts;
 import com.bootcamp.utils.HandleException;
 
 public class LottoConst {
+    public static final int MIN_LOTTO_NUM = 1;
+    public static final int MAX_LOTTO_NUM = 45;
+    public static final int COUNT_OF_LOTTO_NUMBERS = 6;
+    public static final int LOTTO_PRICE = 1_000;
+
+    // 로또 상금
+    public static final long FIRST_PRIZE = 1_000_000_000;
+    public static final long SECOND_PRIZE = 50_000_000;
+    public static final long THIRD_PRIZE = 3_000_000;
+    public static final long FOURTH_PRIZE = 50_000;
+    public static final long FIFTH_PRIZE = 5_000;
     
     public enum ErrorCode {
         LESS_THAN_PRICE("400-1", "낸 금액이 로또의 가격보다 작습니다."),

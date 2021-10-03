@@ -13,15 +13,6 @@ import com.bootcamp.lotto.model.dto.WinningLottoDto;
 import com.bootcamp.lotto.service.WinLottoService;
 
 public class WinLottoServiceImpl implements WinLottoService {
-    
-
-    private final int COUNT_OF_LOTTO_NUMBERS = 6;
-    private final int MAX_LOTTO_NUM = 45;
-    private final long FIRST_PRIZE = 1_000_000_000;
-    private final long SECOND_PRIZE = 50_000_000;
-    private final long THIRD_PRIZE = 3_000_000;
-    private final long FOURTH_PRIZE = 50_000;
-    private final long FIFTH_PRIZE = 5_000;
 
 
     @Override
@@ -40,7 +31,7 @@ public class WinLottoServiceImpl implements WinLottoService {
         // 각 로또 결과 얻기
         List<ResultLottoDto> results = new ArrayList<>();
         for(Lotto lotto: lottos) {
-            if(lotto.getNumbers().size() != COUNT_OF_LOTTO_NUMBERS) {
+            if(lotto.getNumbers().size() != LottoConst.COUNT_OF_LOTTO_NUMBERS) {
                 throw LottoConst.ErrorCode.THE_NUMBER_OF_NUMBERS_ERROR.throwException();
             }
             ResultLottoDto resultDto = getResultLotto(winningLotto, lotto);
@@ -48,7 +39,7 @@ public class WinLottoServiceImpl implements WinLottoService {
             results.add(resultDto);
         }
 
-        double priceOfLottos = lottos.size() * Lotto.LOTTO_PRICE;
+        double priceOfLottos = lottos.size() * LottoConst.LOTTO_PRICE;
         double profitRate = ((prize - priceOfLottos) / priceOfLottos) * 100;
 
         // 당첨로또 번호와 총 결과값 반환
@@ -64,13 +55,13 @@ public class WinLottoServiceImpl implements WinLottoService {
         Set<Integer> lottoSet = new TreeSet<>();
 
         while (lottoSet.size() != 6) {
-            int i = random.nextInt(MAX_LOTTO_NUM) + 1; // (0이상 45미만) + 1
+            int i = random.nextInt(LottoConst.MAX_LOTTO_NUM) + 1; // (0이상 45미만) + 1
             lottoSet.add(i);
         }
 
         int bonusNum = 0;
         do {
-            bonusNum = random.nextInt(MAX_LOTTO_NUM) + 1; // (0이상 45미만) + 1
+            bonusNum = random.nextInt(LottoConst.MAX_LOTTO_NUM) + 1; // (0이상 45미만) + 1
         } while (lottoSet.contains(bonusNum));
 
         return new Lotto(lottoSet, bonusNum);
@@ -98,25 +89,25 @@ public class WinLottoServiceImpl implements WinLottoService {
 
         switch(matchCount) {
             case 6: result.setRank(1);
-                    result.setPrize(FIRST_PRIZE);
+                    result.setPrize(LottoConst.FIRST_PRIZE);
                     break;
             case 5:
                     if (lotto.getNumbers().contains(winningLotto.getBonusNum())) {
                         result.setRank(2);
-                        result.setPrize(SECOND_PRIZE);
+                        result.setPrize(LottoConst.SECOND_PRIZE);
                     } else {
                         result.setRank(3);
-                        result.setPrize(THIRD_PRIZE);
+                        result.setPrize(LottoConst.THIRD_PRIZE);
                     }
                     break;
             case 4:
                     result.setRank(4);
-                    result.setPrize(FOURTH_PRIZE);
+                    result.setPrize(LottoConst.FOURTH_PRIZE);
                     break;
 
             case 3:
                     result.setRank(5);
-                    result.setPrize(FIFTH_PRIZE);
+                    result.setPrize(LottoConst.FIFTH_PRIZE);
                     break;
             default: ;
         }

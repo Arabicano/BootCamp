@@ -1,6 +1,5 @@
 package com.bootcamp.lotto.service.impl;
 
-import com.bootcamp.lotto.model.Lotto;
 import com.bootcamp.lotto.model.consts.LottoConst;
 import com.bootcamp.lotto.model.dto.ChangeDto;
 import com.bootcamp.lotto.service.BuyLottoService;
@@ -17,13 +16,14 @@ public class BuyLottoServiceImpl implements BuyLottoService {
         int countOfLotto = 0;
         int change = 0;
 
-        if (money < Lotto.LOTTO_PRICE) {
+        if (money < LottoConst.LOTTO_PRICE) {
             // 1. 예외 처리
+            System.out.println(LottoConst.ErrorCode.LESS_THAN_PRICE.throwException().getMessage());
             throw LottoConst.ErrorCode.LESS_THAN_PRICE.throwException();
         } else {
             // 2. 구매 장수와 나머지 반환
-            countOfLotto = money / Lotto.LOTTO_PRICE;
-            change = money - countOfLotto * Lotto.LOTTO_PRICE;
+            countOfLotto = money / LottoConst.LOTTO_PRICE;
+            change = money - countOfLotto * LottoConst.LOTTO_PRICE;
         }
 
         return new ChangeDto(countOfLotto, change);

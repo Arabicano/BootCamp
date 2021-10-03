@@ -13,11 +13,6 @@ import com.bootcamp.lotto.service.CreateLottoService;
 
 public class CreateLottoServiceImpl implements CreateLottoService {
 
-    private final int COUNT_OF_LOTTO_NUMBERS = 6;
-    private final int MIN_LOTTO_NUM = 1;
-    private final int MAX_LOTTO_NUM = 45;
-
-
     @Override
     public List<Lotto> createLotto(LottoCreateDto lottoCreateDto) {
 
@@ -45,24 +40,24 @@ public class CreateLottoServiceImpl implements CreateLottoService {
 
         return lottos;
     }
-
+  
     // 수동 로또 생성
     private Lotto createNonAutoLotto(Integer[] numbers) {
 
         // val. 로또 숫자 갯수가 6개인지 확인
-        if (numbers.length != COUNT_OF_LOTTO_NUMBERS) {
+        if (numbers.length != LottoConst.COUNT_OF_LOTTO_NUMBERS) {
             throw LottoConst.ErrorCode.THE_NUMBER_OF_NUMBERS_ERROR.throwException();
         }
         Set<Integer> lottoNumber = new TreeSet<>();
         for (Integer num : numbers) {
             // val. 숫자가 1~45 사이여야 함
-            if (num < MIN_LOTTO_NUM || num > MAX_LOTTO_NUM) {
+            if (num < LottoConst.MIN_LOTTO_NUM || num > LottoConst.MAX_LOTTO_NUM) {
                 throw LottoConst.ErrorCode.NOT_INCLUDED_LOTTO_NUMBER.throwException();
             }
             lottoNumber.add(num);
         }
         // val. 중복 숫자가 있었을 경우 갯수가 6개 미만일 수 있음
-        if (lottoNumber.size() != COUNT_OF_LOTTO_NUMBERS) {
+        if (lottoNumber.size() != LottoConst.COUNT_OF_LOTTO_NUMBERS) {
             throw LottoConst.ErrorCode.THE_NUMBER_OF_NUMBERS_ERROR.throwException();
         }
 
@@ -74,8 +69,8 @@ public class CreateLottoServiceImpl implements CreateLottoService {
         // 1 ~ 45 사이의 중복되지 않는 6개의 숫자
         Random random = new Random(); // 랜덤 객체
         Set<Integer> lottoSet = new TreeSet<>();
-        while (lottoSet.size() != COUNT_OF_LOTTO_NUMBERS) {
-            int i = random.nextInt(MAX_LOTTO_NUM) + 1; // (0이상 45미만) + 1
+        while (lottoSet.size() != LottoConst.COUNT_OF_LOTTO_NUMBERS) {
+            int i = random.nextInt(LottoConst.MAX_LOTTO_NUM) + 1; // (0이상 45미만) + 1
             lottoSet.add(i);
         }
 
